@@ -19,6 +19,7 @@ type Props = {
   pressColorAndroid?: ?string,
   title?: ?string,
   titleStyle?: ?Style,
+  iconStyle?: ?Style,
   tintColor?: ?string,
   truncatedTitle?: ?string,
   width?: ?number,
@@ -61,6 +62,7 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
       width,
       title,
       titleStyle,
+      iconStyle,
       tintColor,
       truncatedTitle,
     } = this.props;
@@ -88,7 +90,12 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
       >
         <View style={styles.container}>
           <Image
-            style={[styles.icon, title && styles.iconWithTitle, { tintColor }]}
+            style={[
+              styles.icon,
+              title && styles.iconWithTitle,
+              { tintColor },
+              iconStyle,
+            ]}
             source={asset}
           />
           {Platform.OS === 'ios' &&
