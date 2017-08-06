@@ -1,15 +1,15 @@
 /* @flow */
 
-import invariant from "../utils/invariant";
-import shallowEqual from "../utils/shallowEqual";
+import invariant from '../utils/invariant';
+import shallowEqual from '../utils/shallowEqual';
 
 import type {
   NavigationRoute,
   NavigationScene,
-  NavigationState
-} from "../TypeDefinition";
+  NavigationState,
+} from '../TypeDefinition';
 
-const SCENE_KEY_PREFIX = "scene_";
+const SCENE_KEY_PREFIX = 'scene_';
 
 /**
  * Helper function to compare route keys (e.g. "9", "11").
@@ -103,12 +103,12 @@ export default function ScenesReducer(
       isActive: false,
       isStale: false,
       key,
-      route
+      route,
     };
     invariant(
       !nextKeys.has(key),
       `navigation.state.routes[${index}].key "${key}" conflicts with ` +
-        "another route!"
+        'another route!'
     );
     nextKeys.add(key);
 
@@ -132,7 +132,7 @@ export default function ScenesReducer(
         isActive: false,
         isStale: true,
         key,
-        route
+        route,
       });
     });
   }
@@ -151,19 +151,7 @@ export default function ScenesReducer(
     }
   };
 
-  // https://github.com/gorokhovich/react-navigation/commit/30e6d0c
-  let k = null;
-  let v = null;
-  staleScenes.forEach(scene => {
-    let { key } = scene;
-    k = key;
-    v = scene;
-  });
-
-  const newStaleScenes = k && v ? new Map([[k, v]]) : new Map();
-  newStaleScenes.forEach(mergeScene);
-  // https://github.com/gorokhovich/react-navigation/commit/30e6d0c
-
+  staleScenes.forEach(mergeScene);
   freshScenes.forEach(mergeScene);
 
   nextScenes.sort(compareScenes);
@@ -174,7 +162,7 @@ export default function ScenesReducer(
     if (isActive !== scene.isActive) {
       nextScenes[ii] = {
         ...scene,
-        isActive
+        isActive,
       };
     }
     if (isActive) {
@@ -184,7 +172,7 @@ export default function ScenesReducer(
 
   invariant(
     activeScenesCount === 1,
-    "there should always be only one scene active, not %s.",
+    'there should always be only one scene active, not %s.',
     activeScenesCount
   );
 
