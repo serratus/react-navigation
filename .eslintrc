@@ -1,24 +1,18 @@
 {
   "extends": [
-    "plugin:flowtype/recommended",
     "plugin:react/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "prettier",
-    "prettier/flowtype",
     "prettier/react"
   ],
   "parser": "babel-eslint",
   "plugins": [
     "react",
-    "flowtype",
     "prettier"
   ],
   "env": {
     "jasmine": true
-  },
-  "globals": {
-    "ReactClass": true
   },
   "rules": {
     "prettier/prettier": ["error", {
@@ -49,28 +43,8 @@
     "react/prop-types": "off",
     "react/require-default-props": "off",
     "react/no-unused-prop-types": "off",
-
-    "flowtype/boolean-style": [
-      "error",
-      "boolean"
-    ],
-    "flowtype/no-weak-types": "off",
-    "flowtype/require-parameter-type": "error",
-    "flowtype/require-return-type": [
-      "off",
-      "always",
-      {
-        "annotateUndefined": "never"
-      }
-    ],
-    "flowtype/require-valid-file-annotation": "error",
-    "flowtype/use-flow-type": "warn",
-    "flowtype/valid-syntax": "warn"
   },
   "settings": {
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
-    }
   },
   "parserOptions": {
     "ecmaVersion": 6,

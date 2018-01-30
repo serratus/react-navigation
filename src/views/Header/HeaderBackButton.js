@@ -1,5 +1,3 @@
-/* @flow */
-
 import React from 'react';
 import {
   I18nManager,
@@ -10,43 +8,22 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import type { LayoutEvent, TextStyleProp, ViewStyleProp } from '../../TypeDefinition';
-
 import TouchableItem from '../TouchableItem';
 
-type Props = {
-  onPress?: () => void,
-  pressColorAndroid?: string,
-  title?: ?string,
-  titleStyle?: ?TextStyleProp,
-  iconStyle?: ?ViewStyleProp,
-  tintColor?: ?string,
-  truncatedTitle?: ?string,
-  width?: ?number,
-};
-
-type DefaultProps = {
-  pressColorAndroid: string,
-  tintColor: ?string,
-  truncatedTitle: ?string,
-};
-
-type State = {
-  initialTextWidth?: number,
-};
-
-class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
+class HeaderBackButton extends React.PureComponent {
   static defaultProps = {
     pressColorAndroid: 'rgba(0, 0, 0, .32)',
     tintColor: Platform.select({
       ios: '#037aff',
     }),
     truncatedTitle: 'Back',
+    // eslint-disable-next-line global-require
+    buttonImage: require('../assets/back-icon.png'),
   };
 
   state = {};
 
-  _onTextLayout = (e: LayoutEvent) => {
+  _onTextLayout = e => {
     if (this.state.initialTextWidth) {
       return;
     }
@@ -57,6 +34,7 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
 
   render() {
     const {
+      buttonImage,
       onPress,
       pressColorAndroid,
       width,
@@ -73,9 +51,6 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
         : false;
 
     const backButtonTitle = renderTruncated ? truncatedTitle : title;
-
-    // eslint-disable-next-line global-require
-    const asset = require('../assets/back-icon.png');
 
     return (
       <TouchableItem
@@ -97,21 +72,22 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
               !!tintColor && { tintColor },
               iconStyle,
             ]}
-            source={asset}
+            source={buttonImage}
           />
           {Platform.OS === 'ios' &&
-            title &&
-            <Text
-              onLayout={this._onTextLayout}
-              style={[
-                styles.title,
-                !!tintColor && { color: tintColor },
-                titleStyle,
-              ]}
-              numberOfLines={1}
-            >
-              {backButtonTitle}
-            </Text>}
+            typeof backButtonTitle === 'string' && (
+              <Text
+                onLayout={this._onTextLayout}
+                style={[
+                  styles.title,
+                  !!tintColor && { color: tintColor },
+                  titleStyle,
+                ]}
+                numberOfLines={1}
+              >
+                {backButtonTitle}
+              </Text>
+            )}
         </View>
       </TouchableItem>
     );
